@@ -1,9 +1,10 @@
 import { useHttp } from '../../hooks/http.hook'; //для того чтобы делать запрос
 import { useEffect, useCallback } from 'react'; //для того чтобы делать правильно запрос в правильное время
 import { useDispatch, useSelector } from 'react-redux'; //два хука которые используются в redux
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 
-import { heroesFetching, heroesFetched, heroesFetchingError, heroDeleted } from '../../actions/index.js' //action
+import { heroDeleted, fetchHeroes } from './heroesSlice'
+
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
@@ -21,8 +22,8 @@ const HeroesList = () => {
             if (filter === 'all') { // Если у всех стоит all то мы возвразаем просто полный масив
                 return heroes
             } else {
-                return heroes.filter(item => item.element === filter) // из state вытаскиваем список героев потом мы кго фильтруем. 
-                                    //Если его элемент совпадает с активным фильтром то он ропадает в новый массив если нет то он просто отбрасывается
+                return heroes.filter(item => item.element === filter) // из state вытаскиваем список героев потом мы eго фильтруем. 
+                                    //Если его элемент совпадает с активным фильтром то он попадает в новый массив если нет то он просто отбрасывается
                                     //В итоге у нас получится новый масив который попадет в переменную filteredHeroes 
             }
         }
@@ -39,16 +40,12 @@ const HeroesList = () => {
     // })
 
     const filteredHeroes = useSelector(filteredHeroesSelector)
-    const heroesLoadingStatus = useSelector(state => state.heroesLoadingStatus);
+    const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
     useEffect(() => {
-        dispatch(heroesFetching());
-        request("http://localhost:3001/heroes")
-            .then(data => dispatch(heroesFetched(data)))
-            .catch(() => dispatch(heroesFetchingError()))
-
+        dispatch(fetchHeroes());
         // eslint-disable-next-line
     }, []);
 

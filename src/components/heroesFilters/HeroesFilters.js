@@ -3,7 +3,7 @@ import { useEffect } from 'react'; //для того чтобы делать п�
 import { useDispatch, useSelector } from 'react-redux'; //два хука которые используются в redux
 import classNames from 'classnames'; //бтблиотека для работы с добавлением классов
 
-import { filtersFetching, filtersFetched, filtersFetchingError, activeFilterChanged } from '../../actions';
+import { activeFilterChanged, fetchFilters } from './filtersSlice'
 import Spinner from '../spinner/Spinner';
 
 // Задача для этого компонента:
@@ -19,11 +19,7 @@ const HeroesFilters = () => {
 
 	// Запрос на сервер для получения фильтров и последовательной смены состояния
 	useEffect(() => {
-		dispatch(filtersFetching());
-		request("http://localhost:3001/filters")
-			.then(data => dispatch(filtersFetched(data)))
-			.catch(() => dispatch(filtersFetchingError()))
-
+		dispatch(fetchFilters(request));
 		// eslint-disable-next-line
 	}, []);
 

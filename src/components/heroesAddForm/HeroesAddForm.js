@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; //два хука которые используются в redux
 import { v4 as uuidv4 } from 'uuid';
 
-import { heroCreated } from '../../actions';
+import { heroCreated } from '../../components/heroesList/heroesSlice';
 
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
