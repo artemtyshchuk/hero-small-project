@@ -1,9 +1,8 @@
 import { useHttp } from '../../hooks/http.hook'; //для того чтобы делать запрос
 import { useEffect, useCallback } from 'react'; //для того чтобы делать правильно запрос в правильное время
 import { useDispatch, useSelector } from 'react-redux'; //два хука которые используются в redux
-import { createSelector } from '@reduxjs/toolkit';
 
-import { heroDeleted, fetchHeroes } from './heroesSlice'
+import { heroDeleted, fetchHeroes, filteredHeroesSelector } from './heroesSlice'
 
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
@@ -14,30 +13,6 @@ import Spinner from '../spinner/Spinner';
 // Удаление идет и с json файла при помощи метода DELETE
 
 const HeroesList = () => {
-
-    const filteredHeroesSelector = createSelector(
-        (state) => state.filters.activeFilter,
-        (state) => state.heroes.heroes,
-        (filter, heroes) => {
-            if (filter === 'all') { // Если у всех стоит all то мы возвразаем просто полный масив
-                return heroes
-            } else {
-                return heroes.filter(item => item.element === filter) // из state вытаскиваем список героев потом мы eго фильтруем. 
-                                    //Если его элемент совпадает с активным фильтром то он попадает в новый массив если нет то он просто отбрасывается
-                                    //В итоге у нас получится новый масив который попадет в переменную filteredHeroes 
-            }
-        }
-    )
-
-    // const filteredHeroes = useSelector(state => {
-    //     if (state.filters.activeFilter === 'all') { // Если у всех стоит all то мы возвразаем просто полный масив
-    //         return state.heroes.heroes;
-    //     } else {
-    //         return state.heroes.heroes.filter(item => item.element === state.filters.activeFilter) // из state вытаскиваем список героев потом мы кго фильтруем. 
-    //                             //Если его элемент совпадает с активным фильтром то он ропадает в новый массив если нет то он просто отбрасывается
-    //                             //В итоге у нас получится новый масив который попадет в переменную filteredHeroes 
-    //     }
-    // })
 
     const filteredHeroes = useSelector(filteredHeroesSelector)
     const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
@@ -78,7 +53,6 @@ const HeroesList = () => {
         if (arr.length === 0) {
             return <h5 className="text-center mt-5">Героев пока нет</h5>
         }
-
 
         return arr.map(({id, ...props}) => {
             return (

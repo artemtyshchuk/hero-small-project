@@ -2,8 +2,9 @@ import {useHttp} from '../../hooks/http.hook'; //для того чтобы де
 import { useEffect } from 'react'; //для того чтобы делать правильно запрос в правильное время
 import { useDispatch, useSelector } from 'react-redux'; //два хука которые используются в redux
 import classNames from 'classnames'; //бтблиотека для работы с добавлением классов
+import store from '../../store/index'
 
-import { activeFilterChanged, fetchFilters } from './filtersSlice'
+import { activeFilterChanged, fetchFilters, selectAll } from './filtersSlice'
 import Spinner from '../spinner/Spinner';
 
 // Задача для этого компонента:
@@ -13,7 +14,8 @@ import Spinner from '../spinner/Spinner';
 
 const HeroesFilters = () => {
 
-	const {filters, filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
+	const { filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
+	const filters = selectAll(store.getState())
 	const dispatch = useDispatch();
 	const {request} = useHttp();
 
