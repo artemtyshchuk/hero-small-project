@@ -1,12 +1,12 @@
 import { createSelector, createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
-import { useHttp } from '../../hooks/http.hook'; //для того чтобы делать запрос
+import { useHttp } from '../../hooks/http.hook';
 
-const heroesAdapter = createEntityAdapter();  //createEntityAdapter
+const heroesAdapter = createEntityAdapter(); 
 
 
-const initialState = heroesAdapter.getInitialState({ //позволяет создавать начальное состояние 
+const initialState = heroesAdapter.getInitialState({
     heroesLoadingStatus: 'idle'
-}); //createEntityAdapter
+});
 
 export const fetchHeroes = createAsyncThunk (
     'heroes/fetchHeroes',
@@ -21,12 +21,10 @@ const heroesSlice = createSlice({
     initialState,
     reducers: {
         heroCreated: (state, action) => {
-            // state.heroes.push(action.payload)
-            heroesAdapter.addOne(state, action.payload);  //createEntityAdapter
+            heroesAdapter.addOne(state, action.payload); 
         },
         heroDeleted: (state, action) => {
-            // state.heroes = state.heroes.filter(item => item.id !== action.payload)
-            heroesAdapter.removeOne(state, action.payload)  //createEntityAdapter
+            heroesAdapter.removeOne(state, action.payload) 
         }
     },
 
@@ -37,13 +35,12 @@ const heroesSlice = createSlice({
             })
             .addCase(fetchHeroes.fulfilled, (state, action) => {
                 state.heroesLoadingStatus = 'idle';
-                // state.heroes = action.payload;
-                heroesAdapter.setAll(state, action.payload)       //createEntityAdapter
+                heroesAdapter.setAll(state, action.payload)
             })
             .addCase(fetchHeroes.rejected, state => {
                 state.heroesLoadingStatus = 'error'
             })
-            .addDefaultCase(() => {}) // ничего делать не будет 
+            .addDefaultCase(() => {})
     }
 });
 
@@ -51,20 +48,17 @@ const {actions, reducer} = heroesSlice;
 
 export default reducer
 
-//
-const {selectAll} = heroesAdapter.getSelectors(state => state.heroes) //createEntityAdapter
+
+const {selectAll} = heroesAdapter.getSelectors(state => state.heroes) 
 
 export const filteredHeroesSelector = createSelector(
     (state) => state.filters.activeFilter,
-    // (state) => state.heroes.heroes,
-    selectAll,                          //createEntityAdapter
+    selectAll,                         
     (filter, heroes) => {
-        if (filter === 'all') { // Если у всех стоит all то мы возвразаем просто полный масив
+        if (filter === 'all') { 
             return heroes
         } else {
-            return heroes.filter(item => item.element === filter) // из state вытаскиваем список героев потом мы eго фильтруем. 
-                                //Если его элемент совпадает с активным фильтром то он попадает в новый массив если нет то он просто отбрасывается
-                                //В итоге у нас получится новый масив который попадет в переменную filteredHeroes 
+            return heroes.filter(item => item.element === filter)
         }
     }
 )

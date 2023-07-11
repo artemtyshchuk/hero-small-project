@@ -8,12 +8,6 @@ const initialState = filtersAdapter.getInitialState({
     activeFilter: 'all'
 })
 
-// const initialState = {
-//     filters: [],
-//     filtersLoadingStatus: 'idle',
-//     activeFilter: 'all'
-// }
-
 export const fetchFilters = createAsyncThunk (
     'filters/fetchFilters',
     async () => {
@@ -37,13 +31,13 @@ const filtersSlice = createSlice({
             })
             .addCase(fetchFilters.fulfilled, (state, action) => {
                 state.filtersLoadingStatus = 'idle';
-                // state.filters = action.payload; 
+
                 filtersAdapter.setAll(state, action.payload);
             })
             .addCase(fetchFilters.rejected, state => {
                 state.filtersLoadingStatus = 'error'
             })
-            .addDefaultCase(() => {}) // ничего делать не будет 
+            .addDefaultCase(() => {})
     }
 });
 

@@ -12,7 +12,7 @@ const stringMiddleware = (store) => (next) => (action) => {
     return next(action)
 }
 
-const store = configureStore({ //через toolkit
+const store = configureStore({ // toolkit
     reducer: {heroes, filters},
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(stringMiddleware),
     devTools: process.env.NODE_ENV !== 'production', // если продакшн то активен, если нет то нет
