@@ -2,52 +2,46 @@
   "heroes": [
     {
       "id": 2,
-      "name": "Неизвестный герой",
-      "description": "Скрывающийся в тени",
+      "name": "Unknown hero",
+      "description": "Lurking in the shadows",
       "element": "wind"
     },
     {
       "id": 3,
-      "name": "Морской герой",
-      "description": "Как аквамен, но не из DC",
+      "name": "Sea hero",
+      "description": "Like Aquaman, but not from DC",
       "element": "water"
-    },
-    {
-      "id": "6ded3738-f444-4281-bc3b-28f0dd8ca5e6",
-      "name": "ffefef",
-      "description": "effeff",
-      "element": "fire"
     }
   ],
   "filters": [
     {
       "id": "all",
       "name": "all",
-      "label": "Все",
+      "label": "All",
       "className": "btn-outline-dark"
     },
     {
       "id": "fire",
       "name": "fire",
-      "label": "Огонь",
+      "label": "Fire",
       "className": "btn-danger"
     },
     {
       "id": "water",
       "name": "water",
-      "label": "Вода",
+      "label": "Water",
       "className": "btn-primary"
     },
     {
       "id": "wind",
       "name": "wind",
-      "label": "Ветер",
+      "label": "Wind",
       "className": "btn-success"
     },
     {
       "id": "earth",
       "name": "earth",
-      "label": "Земля",
+      "label": "Earth",
       "className": "btn-secondary"
     }
   ]
